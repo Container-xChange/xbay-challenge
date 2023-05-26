@@ -34,6 +34,27 @@ public class OfferService {
         return buildOffer(savedOffer);
     }
 
+    public Offer getOffer(UUID offerId) {
+        OfferEntity offerEntity = repository.getReferenceById(offerId);
+        return buildOffer(offerEntity);
+    }
+
+    @Transactional
+    public void rejectOffer(UUID offerId) {
+        OfferEntity offerEntity = repository.getReferenceById(offerId);
+        offerEntity.setStatus(OfferEntityStatus.REJECTED);
+
+        publishRejectNotification(offerEntity);
+    }
+
+    @Transactional
+    public void acceptOffer(UUID offerId) {
+        OfferEntity offerEntity = repository.getReferenceById(offerId);
+        offerEntity.setStatus(OfferEntityStatus.ACCEPTED);
+
+        publishAcceptNotification(offerEntity);
+    }
+
     private void publishNotification(OfferEntity offer) {
         UserEntity buyer = userService.getUser(offer.getBuyerId());
         UserEntity seller = listingService.getListing(offer.getListingId())
@@ -50,19 +71,6 @@ public class OfferService {
                                                      .build());
     }
 
-    public Offer getOffer(UUID offerId) {
-        OfferEntity offerEntity = repository.getReferenceById(offerId);
-        return buildOffer(offerEntity);
-    }
-
-    @Transactional
-    public void rejectOffer(UUID offerId) {
-        OfferEntity offerEntity = repository.getReferenceById(offerId);
-        offerEntity.setStatus(OfferEntityStatus.REJECTED);
-
-        publishRejectNotification(offerEntity);
-    }
-
     private void publishRejectNotification(OfferEntity offer) {
         UserEntity buyer = userService.getUser(offer.getBuyerId());
         eventPublisher.publishEvent(NotificationEvent.builder()
@@ -70,14 +78,6 @@ public class OfferService {
                                                      .subject("Offer rejected")
                                                      .message("Your offer has been rejected: " + offer.getId())
                                                      .build());
-    }
-
-    @Transactional
-    public void acceptOffer(UUID offerId) {
-        OfferEntity offerEntity = repository.getReferenceById(offerId);
-        offerEntity.setStatus(OfferEntityStatus.ACCEPTED);
-
-        publishAcceptNotification(offerEntity);
     }
 
     private void publishAcceptNotification(OfferEntity offer) {
