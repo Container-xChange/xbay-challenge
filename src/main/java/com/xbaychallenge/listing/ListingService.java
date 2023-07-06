@@ -12,7 +12,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +23,7 @@ public class ListingService {
     private final UserService userService;
     private final ApplicationEventPublisher eventPublisher;
 
-    public Page<Listing> getListings(PageRequest pageRequest) {
+    public Page<Listing> getListings(Pageable pageRequest) {
         return repository.findAll(pageRequest)
                          .map(this::buildDTO);
     }
