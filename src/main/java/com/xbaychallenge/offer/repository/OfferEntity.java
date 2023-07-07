@@ -1,9 +1,7 @@
 package com.xbaychallenge.offer.repository;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +15,16 @@ public class OfferEntity {
     @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false)
     private UUID listingId;
 
+    @Column(nullable = false)
     private UUID buyerId;
 
+    @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
     private OfferEntityStatus status = OfferEntityStatus.PENDING;
 
 }

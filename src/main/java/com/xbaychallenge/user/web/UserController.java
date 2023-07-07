@@ -2,6 +2,7 @@ package com.xbaychallenge.user.web;
 
 import com.xbaychallenge.user.UserService;
 import com.xbaychallenge.user.repository.UserEntity;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping
-    public ResponseEntity<UserEntity> createUser(@RequestBody CreateUserRequest request){
+    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody CreateUserRequest request){
         UserEntity user = service.createUser(request);
         return ResponseEntity.ok(user);
     }

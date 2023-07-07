@@ -1,11 +1,7 @@
 package com.xbaychallenge.listing.repository;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -31,10 +27,13 @@ public class ListingEntity {
 
     private String description;
 
+    @Column(nullable = false)
     private String category;
 
+    @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
     private UUID seller;
 
     @CreatedDate

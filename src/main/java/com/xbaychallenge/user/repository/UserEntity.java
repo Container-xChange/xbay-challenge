@@ -1,10 +1,9 @@
 package com.xbaychallenge.user.repository;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +12,18 @@ import lombok.Setter;
 @Setter
 @Table(name = "users")
 public class UserEntity {
+
     @Id
     @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false)
     private String firstname;
+
+    @Column(nullable = false)
     private String surname;
+
+    @Column(nullable = false)
     private String email;
 
 }
