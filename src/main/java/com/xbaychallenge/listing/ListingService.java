@@ -9,6 +9,8 @@ import com.xbaychallenge.notification.NotificationEvent;
 import com.xbaychallenge.user.UserService;
 import com.xbaychallenge.user.repository.UserEntity;
 import java.util.UUID;
+import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,11 @@ public class ListingService {
     public Page<Listing> getListings(Pageable pageRequest) {
         return repository.findAll(pageRequest)
                          .map(this::buildDTO);
+    }
+
+    public Stream<Listing> getListingsForCategory(String category) {
+        return repository.getAllByCategory(category)
+            .map(this::buildDTO);
     }
 
     public Listing getListing(UUID id) {

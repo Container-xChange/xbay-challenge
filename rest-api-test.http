@@ -14,7 +14,8 @@ Content-Type: application/json
 
 { "title" : "Test Listing",
   "description": "Test Description",
-  "price": 100,
+  "price": 300,
+  "category": "Containers",
   "sellerId": "97a03b64-453f-4c6a-9588-349554eadb15" }
 
 ### Get all Listings
@@ -36,4 +37,7 @@ PUT http://localhost:8080/offers/a973d332-61ad-4fe5-a2fa-007e14c26641/accept
 
 ### Reject an Offer
 PUT http://localhost:8080/listings/1/offers/1/reject
+
+### Get statistics for Listing category
+GET http://localhost:8080/statistics?category=Containers
 

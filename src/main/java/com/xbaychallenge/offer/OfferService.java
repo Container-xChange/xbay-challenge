@@ -14,6 +14,8 @@ import com.xbaychallenge.user.UserService;
 import com.xbaychallenge.user.repository.UserEntity;
 import jakarta.transaction.Transactional;
 import java.util.UUID;
+import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,11 @@ public class OfferService {
     public Offer getOffer(UUID offerId) {
         OfferEntity offerEntity = repository.getReferenceById(offerId);
         return buildOffer(offerEntity);
+    }
+
+    public Stream<Offer> getOffersForListing(UUID listingId) {
+        return repository.getAllByListingId(listingId)
+                         .map(this::buildOffer);
     }
 
     @Transactional
